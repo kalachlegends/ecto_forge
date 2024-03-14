@@ -3,6 +3,14 @@ defmodule EctoForge.Helpers.QueryBinderGet do
   # alias EctoForge.Helpers.RepoBase.Utls.MapUtls
   alias EctoForge.Utls.ExecuteExtension
 
+  @moduledoc """
+  The helper module is used to perform an extension for the `find_all` `get_all` `get!()` `get!` functions.
+  You can use and create your binder
+
+  ```elixir
+  use EctoForge.Helpers.QueryBinderGet module_model: __MODULE__, extensions_get: [], repo: MyApp.Repo
+  ```
+  """
   defmacro __using__(opts) do
     quote location: :keep, bind_quoted: [opts: opts] do
       @repo opts[:repo]
@@ -23,7 +31,7 @@ defmodule EctoForge.Helpers.QueryBinderGet do
             opts
           )
 
-        result = apply(@repo, mode, [query])
+        result = apply(@repo, mode, [new_query])
 
         {result, attrs} =
           ExecuteExtension.extensions_get_after_exucute(
@@ -35,16 +43,6 @@ defmodule EctoForge.Helpers.QueryBinderGet do
           )
 
         result
-      end
-
-      defp query_function(query, opts \\ %{}) do
-        query_function = opts[:query_function]
-
-        if is_function(query_function) do
-          query_function.(query)
-        else
-          query
-        end
       end
 
       defp normalize_atom(atom) when is_atom(atom), do: atom

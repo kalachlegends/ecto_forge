@@ -7,6 +7,6 @@ defmodule EctoForge.Application do
     ]
 
     opts = [strategy: :one_for_one, name: SimpleQueue.Supervisor]
-  Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, opts)
   end
 end

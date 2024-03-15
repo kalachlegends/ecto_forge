@@ -18,15 +18,15 @@ defmodule EctoForge.Extension.Get.Preload do
   import Ecto.Query
   use EctoForge.CreateExtension.Get
 
-  def before_query_add_extension_to_get(_module, _mode, query, nil) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, query, nil) do
     {query, %{}}
   end
 
-  def before_query_add_extension_to_get(_module, _mode, query, attrs) do
-    {preload_attrs, updated_attrs} = Access.pop(attrs, :preload)
+  def before_query_add_extension_to_get(_module, _mode, _repo, query, attrs) do
+    {preload_attrs, _} = Access.pop(attrs, :preload)
 
     if is_list(preload_attrs) do
-      {preload(query, ^preload_attrs), updated_attrs}
+      {preload(query, ^preload_attrs), attrs}
     else
       {query, attrs}
     end

@@ -9,6 +9,7 @@ defmodule EctoForgeTest.Extensions do
              EctoForge.Extension.Get.Preload.before_query_add_extension_to_get(
                UserModel,
                :one,
+               EctoForge.Repo,
                from(user in UserModel, select: user),
                %{preload: [:user]}
              )
@@ -16,6 +17,7 @@ defmodule EctoForgeTest.Extensions do
     assert {%Ecto.Query{preloads: []}, %{}} =
              EctoForge.Extension.Get.Preload.before_query_add_extension_to_get(
                UserModel,
+               EctoForge.Repo,
                :one,
                from(user in UserModel, select: user),
                nil
@@ -26,6 +28,7 @@ defmodule EctoForgeTest.Extensions do
     assert {query, %{}} =
              EctoForge.Extension.Get.Filter.before_query_add_extension_to_get(
                UserModel,
+               EctoForge.Repo,
                :one,
                from(user in UserModel, select: user),
                %{name: "artem"}
@@ -34,6 +37,7 @@ defmodule EctoForgeTest.Extensions do
     assert {%Ecto.Query{}, %{}} =
              EctoForge.Extension.Get.Filter.before_query_add_extension_to_get(
                UserModel,
+               EctoForge.Repo,
                :one,
                from(user in UserModel, select: user),
                nil

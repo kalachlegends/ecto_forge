@@ -70,9 +70,10 @@ You can use callback functions for processing. After the query and before the qu
  module MyApp.UserModel -> your own module
  mode -> :all or :one
  query -> handled query
+ repo -> MyApp.Repo
  attrs -> attributes that fall
  """
-  def before_query_add_extension_to_get(_module, _mode, query, attrs) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, query, attrs) do
   # module MyApp.UserModel
 
   {query, attrs} # must return query and modified attributes
@@ -82,7 +83,7 @@ You can use callback functions for processing. After the query and before the qu
  query -> handled query
  attrs -> attributes that fall
  """
-  def after_query_add_extension_to_get(_module, _mode, result, attrs) do
+  def after_query_add_extension_to_get(module, mode, repo, prev_query, result, attrs) do
   # module MyApp.UserModel
 
   {result, attrs} # must return result and modified attributes
@@ -104,7 +105,7 @@ defmodule EctoForge.Extension.Get.Preload do
   import Ecto.Query
   use EctoForge.CreateExtension.Get
 
-  def before_query_add_extension_to_get(_module, _mode, query, attrs) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, query, attrs) do
     preload_attrs = Utls.MapUtls.opts_to_map(attrs)
     attrs = Keyword.delete(attrs, :preload)
 
@@ -117,11 +118,6 @@ defmodule EctoForge.Extension.Get.Preload do
 end
 ```
 
-### Callacks extensions
-
-
-on_created
-
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -130,7 +126,7 @@ by adding `ecto_forge` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ecto_forge, "~> 0.1.0"}
+    {:ecto_forge, "~> 0.1.2"}
   ]
 end
 ```

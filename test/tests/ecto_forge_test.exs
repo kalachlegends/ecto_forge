@@ -7,7 +7,7 @@ defmodule EctoForgeTest do
   test "Test create instanse and get filtering" do
     user = EctoForge.Repo.insert!(%UserModel{name: "arte"})
 
-    assert {:error, :not_found} = UserModel.get(name: "arte1", preload: [:user])
+    assert {:error, :not_found} = UserModel.get(filter: %{name: "arte1"}, preload: [:user])
     assert %UserModel{} = user
   end
 
@@ -20,11 +20,11 @@ defmodule EctoForgeTest do
   test "Test one nil" do
     user = EctoForge.Repo.insert!(%UserModel{name: "arte"})
 
-    assert {:ok, [%UserModel{}]} = UserModel.get_all(name: "arte")
+    assert {:ok, [%UserModel{}]} = UserModel.get_all(filter: %{name: "arte"})
 
     user = EctoForge.Repo.insert!(%UserModel{name: "arte"})
 
-    assert UserModel.get_all(%{name: "artems"})
+    assert UserModel.get_all(filter: %{name: "artems"})
   end
 
   test "test create update options" do

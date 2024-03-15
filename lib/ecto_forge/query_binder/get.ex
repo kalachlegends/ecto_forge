@@ -26,6 +26,7 @@ defmodule EctoForge.Helpers.QueryBinderGet do
           ExecuteExtension.extensions_get_before_exucute(
             @module_model,
             @extensions_get,
+            @repo,
             mode,
             query,
             opts
@@ -37,6 +38,7 @@ defmodule EctoForge.Helpers.QueryBinderGet do
           ExecuteExtension.extensions_get_after_exucute(
             @module_model,
             @extensions_get,
+            @repo,
             mode,
             result,
             opts

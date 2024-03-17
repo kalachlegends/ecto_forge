@@ -4,6 +4,7 @@ defmodule EctoForge.Repo.Migrations.User do
   def change do
     create table(:user) do
       add(:name, :string)
+
     end
   end
 end

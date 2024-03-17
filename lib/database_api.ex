@@ -36,6 +36,8 @@ defmodule EctoForge.DatabaseApi do
   - update_with_another_changeset(%@module_model{} = item, opts, function_atom)  # return {:ok, item} or {:error, result}
   - delete(%@module_model{} or opts_for_get) # result {:ok, _} or {:error, _}
   - delete!(%@module_model{} or opts_for_get) # result {:ok, _} or {:error, _}
+  - update_or_create!(get_attrs, or_insert_update_attrs, opts )
+  - update_or_create(get_attrs, or_insert_update_attrs, opts )
   """
   defmacro __using__(opts) do
     quote location: :keep, bind_quoted: [opts: opts] do
@@ -66,6 +68,8 @@ defmodule EctoForge.DatabaseApi do
       - update_with_another_changeset(%@module_model{} = item, opts, function_atom)  # return {:ok, item} or {:error, result}
       - delete(%@module_model{} or opts_for_get) # result {:ok, _} or {:error, _}
       - delete!(%@module_model{} or opts_for_get!) # result {:ok, _} or {:error, _}
+        - update_or_create!(get_attrs, or_insert_update_attrs, opts )
+      - update_or_create(get_attrs, or_insert_update_attrs, opts )
 
       """
 
@@ -76,6 +80,9 @@ defmodule EctoForge.DatabaseApi do
       @ignore_fields opts[:ignore_fields] || []
       @extensions_get opts[:extensions_get] || []
       @not_found_message opts[:error_message] || :not_found
+      if length(@extensions_get) == 0 do
+        :logger.warning("extensions_get give [], expect [Some.Extesnisons]")
+      end
 
       use EctoForge.Helpers.QueryBinderGet,
         repo: @repo,
@@ -204,22 +211,6 @@ defmodule EctoForge.DatabaseApi do
       end
 
       @doc """
-      ##   Returns a structure by its id or by matching the value of the structure's fields
-
-      ```elixir
-      #{@module_model}.find(1) # nil or item
-      ```
-      """
-      def find(item_id) do
-        try do
-          query_bindings([id: item_id], :all)
-        rescue
-          Ecto.Query.CastError -> nil
-        end
-        |> get_helper_after
-      end
-
-      @doc """
       ## Returns a structure by its id or by matching the value of the structure's fields
 
       ## Example
@@ -292,7 +283,7 @@ defmodule EctoForge.DatabaseApi do
       #{@module_model}.get_all(%{status: 1}))
       will equate to `#{@module_model}|> where(%{status: 1)`
 
-      #{@module_model}.get_all(%{preload: [:user]})
+      #{@module_model}.get_all(%{preload: [:posts]})
       will equate to `#{@module_model}|> preload( [:user])`
       ## Example
       ```elixir
@@ -496,6 +487,44 @@ defmodule EctoForge.DatabaseApi do
         with {:ok, item} <- get(item_id_or_opts),
              {:ok, item} <- delete(item) do
           {:ok, item}
+        end
+      end
+
+      @doc """
+      ## do update or create
+
+      ## Example
+
+      ```elixir
+      # attrs_updat_or_insert
+      #{@module_model}.update_or_create!(%{filter: %{artem: "artem"}, %{artem: "artem"}})
+      ```
+      """
+      def update_or_create!(get_attrs, or_insert_update_attrs, opts \\ []) do
+        case find(get_attrs) do
+          %@module_model{} = item ->
+            update_with_another_changeset!(
+              item,
+              or_insert_update_attrs,
+              opts[:update_changeset] || :changeset
+            )
+
+          nil ->
+            create!(or_insert_update_attrs, opts[:create_changeset] || :changeset)
+        end
+      end
+
+      def update_or_create(get_attrs, or_insert_update_attrs, opts \\ []) do
+        case get(get_attrs) do
+          {:ok, %@module_model{} = item} ->
+            update_with_another_changeset(
+              item,
+              or_insert_update_attrs,
+              opts[:update_changeset] || :changeset
+            )
+
+          nil ->
+            create(or_insert_update_attrs, opts[:create_changeset] || :changeset)
         end
       end
 

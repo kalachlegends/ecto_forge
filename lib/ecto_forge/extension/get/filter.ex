@@ -20,11 +20,11 @@ defmodule EctoForge.Extension.Get.Filter do
   """
   use EctoForge.CreateExtension.Get
 
-  def before_query_add_extension_to_get(_module, _mode, _repo, query, nil) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, l_ex, query, nil) do
     {query, %{}}
   end
 
-  def before_query_add_extension_to_get(_module, _mode, _repo, query, attrs) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, l_ex, query, attrs) do
     {filter_attrs, _} = Access.pop(attrs, :filter)
 
     if is_list(filter_attrs) or is_map(filter_attrs) do

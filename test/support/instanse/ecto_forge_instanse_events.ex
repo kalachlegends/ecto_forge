@@ -3,6 +3,7 @@ defmodule Support.EctoForgeInstanceTestEvents do
     extensions_events: [Test.Event.ExtensionDeleteId],
     extensions_get: [
       EctoForge.Extension.Get.Preload,
+      EctoForge.Extension.Get.Aggregate,
       EctoForge.Extension.Get.Filter
     ],
     repo: EctoForge.Repo

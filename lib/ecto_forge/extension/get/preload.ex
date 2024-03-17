@@ -3,7 +3,7 @@ defmodule EctoForge.Extension.Get.Preload do
   ## Use preload with your model
   ### Example
   ```
-  MyApp.UserModel.find(preload: [:user])
+  MyApp.UserModel.find(preload: [:posts])
   ```
   ### Usage
 
@@ -18,11 +18,11 @@ defmodule EctoForge.Extension.Get.Preload do
   import Ecto.Query
   use EctoForge.CreateExtension.Get
 
-  def before_query_add_extension_to_get(_module, _mode, _repo, query, nil) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, _l_ex, query, nil) do
     {query, %{}}
   end
 
-  def before_query_add_extension_to_get(_module, _mode, _repo, query, attrs) do
+  def before_query_add_extension_to_get(_module, _mode, _repo, _l_ex, query, attrs) do
     {preload_attrs, _} = Access.pop(attrs, :preload)
 
     if is_list(preload_attrs) do

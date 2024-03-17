@@ -6,6 +6,7 @@ defmodule EctoForgeTest.UserModel do
 
   schema "user" do
     field(:name, :string)
+    has_many(:posts, EctoForgeTest.PostModel, foreign_key: :user_id)
     # timestamps()
   end
 

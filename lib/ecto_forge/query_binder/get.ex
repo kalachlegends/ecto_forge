@@ -22,27 +22,48 @@ defmodule EctoForge.Helpers.QueryBinderGet do
         as_var = @module_model.__schema__(:source) |> normalize_atom
         query = query_other || from(i in @module_model, as: ^as_var)
 
-        {new_query, attrs} =
-          ExecuteExtension.extensions_get_before_exucute(
-            @module_model,
-            @extensions_get,
-            @repo,
-            mode,
-            query,
-            opts
-          )
+        result =
+          case ExecuteExtension.extensions_get_before_exucute(
+                 @module_model,
+                 @extensions_get,
+                 mode,
+                 @repo,
+                 [],
+                 query,
+                 opts
+               ) do
+            {new_query, attrs} ->
+              result = apply(@repo, mode, [new_query])
 
-        result = apply(@repo, mode, [new_query])
+              {_prev_query, result, _attrs} =
+                ExecuteExtension.extensions_get_after_exucute(
+                  @module_model,
+                  @extensions_get,
+                  mode,
+                  @repo,
+                  [],
+                  new_query,
+                  result,
+                  opts
+                )
 
-        {result, attrs} =
-          ExecuteExtension.extensions_get_after_exucute(
-            @module_model,
-            @extensions_get,
-            @repo,
-            mode,
-            result,
-            opts
-          )
+              result
+
+            {:result, result, prev_query, _attrs} ->
+              {prev_query, result, attrs} =
+                ExecuteExtension.extensions_get_after_exucute(
+                  @module_model,
+                  @extensions_get,
+                  @repo,
+                  [],
+                  prev_query,
+                  mode,
+                  result,
+                  opts
+                )
+
+              result
+          end
 
         result
       end

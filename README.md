@@ -11,6 +11,7 @@ This module allows on-the-go editing of contexts, extensions, and providing basi
 ```elixir
 defmodule MyApp.EctoForgeInstanseBase do
   use EctoForge.CreateInstance,
+    extensions_events: [],
     extensions_get: [
       EctoForge.Extension.Get.Preload, # By EctoForge Exstensions
       EctoForge.Extension.Get.Filter,

@@ -27,18 +27,18 @@ defmodule EctoForge.CreateExtension.Get do
   you can return tuple with {:result, Repo.all(query), attrs}
   This means that your before_query_add_extension_to_get will not go any further I will return a result. This is to bypass the default repo.all function for management
 
-    ```elixir
+  ```elixir
   def before_query_add_extension_to_get(_module, _mode, repo, _list_exetensions_executed, query, attrs) do
     {:result, repo.all(query), query, attrs} # stoped and don't to execute repo.all or one
   end
   ```
 
-     ```elixir
+  ```elixir
   def before_query_add_extension_to_get(_module, _mode, _repo,_list_exetensions_executed, query, attrs) do
     {:stop,query, attrs} # stoped and don't to execute another exensions
   end
   ```
-     ```elixir
+  ```elixir
   def  after_query_add_extension_to_get(module, mode, repo, prev_query,_list_exetensions_executed, result, attrs) do
     {:stop,query, attrs} # stoped and don't to execute another exensions
   end
@@ -47,6 +47,7 @@ defmodule EctoForge.CreateExtension.Get do
   #### Create extenstion is using callbacks before_query_add_extension_to_get(_module, _mode, _repo, query, attrs), after_query_add_extension_to_get(module, mode, repo, prev_query, result, attrs)
 
   Connect `EctoForge.CreateExtension.Get`
+
   ```elixir
     defmodule MyApp.Extension.Get.WhereIsMyUserIdOne do
         use EctoForge.CreateExtension.Get

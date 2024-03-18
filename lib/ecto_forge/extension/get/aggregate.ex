@@ -17,9 +17,8 @@ defmodule EctoForge.Extension.Get.Aggregate do
   iex -> MyApp.Model.get_all!(%{filter: %{status: "active"}, aggregate: %{field: :id, aggregate: :count, opts: []}})
   0
   ```
-   ## Recomidation
+  ## Recomidation
   Use at the very end after used extensions because this extension instantly stops the others
-  ### Attrs
   """
   # import Ecto.Query
   use EctoForge.CreateExtension.Get

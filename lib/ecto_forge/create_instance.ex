@@ -1,7 +1,7 @@
 defmodule EctoForge.CreateInstance do
   @moduledoc """
   ## Create your instanse EctoForge and use for your context or Models
-
+  This module creates an instance with functions from `EctoForge.DatabaseApi`
   ### Using
   ```elixir
   defmodule MyApp.EctoForgeInstanse do
@@ -38,7 +38,6 @@ defmodule EctoForge.CreateInstance do
     |> validate_required([:name])
   end
   end
-
   ```
 
   #### Connect to your context

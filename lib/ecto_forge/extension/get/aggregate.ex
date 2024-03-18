@@ -10,7 +10,7 @@ defmodule EctoForge.Extension.Get.Aggregate do
       EctoForge.Extension.Get.Aggregate,
     ],
     repo: MyApp.Repo
-
+  ```
   ### Using with model functions get get_all find_all find
 
   ```elixir

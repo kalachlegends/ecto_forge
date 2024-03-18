@@ -28,6 +28,26 @@ defmodule EctoForge.MixProject do
     "EctoForge usising for filter query and create some context for Model Schema."
   end
 
+  defp docs() do
+    [
+      main: "EctoForge",
+      extras: [
+        "README.md"
+      ],
+      groups_for_modules: [
+        "Extensions Get": [
+          EctoForge.Extension.Get.Preload,
+          EctoForge.Extension.Get.Filter,
+          EctoForge.Extension.Get.Last,
+          EctoForge.Extension.Get.Limit,
+          EctoForge.Extension.Get.OrderBy,
+          EctoForge.Extension.Get.Aggregate,
+          EctoForge.Extension.Get.OnlyQuery
+        ]
+      ]
+    ]
+  end
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [

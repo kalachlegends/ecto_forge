@@ -35,7 +35,20 @@ defmodule EctoForge.MixProject do
       extras: [
         "README.md"
       ],
+      pages: [
+        "README.md"
+      ],
       groups_for_modules: [
+        "To read": [EctoForge],
+        "Main EctoForge api": [
+          EctoForge.CreateInstance,
+          EctoForge.DatabaseApi,
+          EctoForge.Helpers.QueryBinderGet
+        ],
+        "Create extensions": [
+          EctoForge.CreateExtension.Events,
+          EctoForge.CreateExtension.Get
+        ],
         "Extensions Get": [
           EctoForge.Extension.Get.Preload,
           EctoForge.Extension.Get.Filter,
@@ -44,6 +57,11 @@ defmodule EctoForge.MixProject do
           EctoForge.Extension.Get.OrderBy,
           EctoForge.Extension.Get.Aggregate,
           EctoForge.Extension.Get.OnlyQuery
+        ],
+        Utls: [
+          EctoForge.Utls.ExecuteExtension,
+          EctoForge.Utls.ExecuteExtensionEvents,
+          EctoForge.Helpers.RepoBase.Utls.MapUtls
         ]
       ]
     ]

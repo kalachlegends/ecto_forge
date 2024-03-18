@@ -10,6 +10,7 @@ defmodule EctoForge.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
       aliases: aliases(),
+      docs: docs(),
       package: package(),
       description: description(),
       source_url: "https://github.com/kalachlegends/ecto_forge"

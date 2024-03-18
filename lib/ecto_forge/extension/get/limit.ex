@@ -1,23 +1,24 @@
-defmodule EctoForge.Extension.Get.Filter do
+defmodule EctoForge.Extension.Get.Limit do
   @moduledoc """
-  # Implements library https://hexdocs.pm/filtery/readme.html
+  # Use limit with your `EctoForge.CreateInstance`
 
   ```elixir
   use EctoForge.CreateInstance,
-  extensions_get: [
-    EctoForge.Extension.Get.Filter,
+    extensions_get: [
+      EctoForge.Extension.Get.Limit,
     ],
     repo: MyApp.Repo
     ```
 
     ## When you coonnect
-    You can use Api https://hexdocs.pm/filtery/readme.html
+    You can use Api https://hexdocs.pm/ecto/Ecto.Query.html#limit/3
     ### Example
 
     ```elixir
-     {:ok, []} = MyApp.Model.get_all(filter: %{id: 1})
+     {:ok, []} = MyApp.Model.get_all(limit: 10)
     ```
   """
+  import Ecto.Query
   use EctoForge.CreateExtension.Get
 
   def before_query_add_extension_to_get(_module, _mode, _repo, _l_ex, query, nil) do
@@ -25,10 +26,10 @@ defmodule EctoForge.Extension.Get.Filter do
   end
 
   def before_query_add_extension_to_get(_module, _mode, _repo, _l_ex, query, attrs) do
-    {filter_attrs, _} = Access.pop(attrs, :filter)
+    {limit_attrs, _} = Access.pop(attrs, :limit)
 
-    if is_list(filter_attrs) or is_map(filter_attrs) do
-      {Filtery.apply(query, filter_attrs), attrs}
+    if is_integer(limit_attrs) do
+      {limit(query, ^limit_attrs), attrs}
     else
       {query, attrs}
     end

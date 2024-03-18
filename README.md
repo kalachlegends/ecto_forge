@@ -1,10 +1,20 @@
 # EctoForge
 
-## Motiviation
+## Motivation
 
 This module allows on-the-go editing of contexts, extensions, and providing basic work for the database with ecto. With this module you can add your own extensions for functions such as `find_all` `get_all` `get!` `find`
 
-## Examle usage
+## List extensions by `EctoForge`
+
+- `EctoForge.Extension.Get.Preload`
+- `EctoForge.Extension.Get.Last`
+- `EctoForge.Extension.Get.Limit`
+- `EctoForge.Extension.Get.Aggregate`
+- `EctoForge.Extension.Get.OrderBy`
+- `EctoForge.Extension.Get.Filter`
+- `EctoForge.Extension.Get.OnlyQuery`
+
+## Example usage
 
 ### Create an instance and plug in the necessary extensions from the existing ones or use ready-made ones
 
@@ -14,7 +24,11 @@ defmodule MyApp.EctoForgeInstanseBase do
     extensions_get: [
       EctoForge.Extension.Get.Preload, # By EctoForge Exstensions
       EctoForge.Extension.Get.Filter,
-      EctoForge.Extension.Get.Pagination
+      EctoForge.Extension.Get.Last,
+      EctoForge.Extension.Get.Limit,
+      EctoForge.Extension.Get.OrderBy,
+      EctoForge.Extension.Get.Aggregate,
+      EctoForge.Extension.Get.OnlyQuery,
     ],
     repo: MyApp.Repo
 end
@@ -133,7 +147,7 @@ by adding `ecto_forge` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ecto_forge, "~> 0.1.2"}
+    {:ecto_forge, "~> 0.1.4"}
   ]
 end
 ```

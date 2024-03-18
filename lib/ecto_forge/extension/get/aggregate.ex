@@ -17,6 +17,8 @@ defmodule EctoForge.Extension.Get.Aggregate do
   iex -> MyApp.Model.get_all!(%{filter: %{status: "active"}, aggregate: %{field: :id, aggregate: :count, opts: []}})
   0
   ```
+   ## Recomidation
+  Use at the very end after used extensions because this extension instantly stops the others
   ### Attrs
   """
   # import Ecto.Query
@@ -26,7 +28,7 @@ defmodule EctoForge.Extension.Get.Aggregate do
     {query, %{}}
   end
 
-  def before_query_add_extension_to_get(module, mode, repo, _l_ex, query, attrs) do
+  def before_query_add_extension_to_get(_module, _mode, repo, _l_ex, query, attrs) do
     {aggregate_attrs, _} = Access.pop(attrs, :aggregate)
 
     if is_map(aggregate_attrs) or is_list(aggregate_attrs) do

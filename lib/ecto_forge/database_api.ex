@@ -149,7 +149,7 @@ defmodule EctoForge.DatabaseApi do
       def create(map, function) do
         map = ExecuteExtensionEvents.exucute_before_created(map, @extensions_events)
 
-        apply(@module_model, function, [@module_model, map])
+        apply(@module_model, function, [%@module_model{}, map])
         |> @repo.insert()
         |> ExecuteExtensionEvents.exucute_after_created(@extensions_events)
       end

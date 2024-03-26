@@ -39,10 +39,25 @@ defmodule EctoForge.DatabaseApi do
   - update_or_create!(get_attrs, or_insert_update_attrs, opts )
   - update_or_create(get_attrs, or_insert_update_attrs, opts )
   """
-  @callback create!(create_attrs :: map(), function_changest_from_module :: atom()) :: struct()
-  @callback create!(create_attrs :: map()) :: struct()
-  @callback create(create_attrs :: map()) :: {:ok, struct()} | {:error, Ecto.Changeset.t()}
-  @callback create(create_attrs :: map(), function_changest_from_module :: atom()) ::
+  @callback create!(
+              create_attrs ::
+                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary()),
+              function_changest_from_module :: atom()
+            ) :: struct()
+  @callback create!(
+              create_attrs ::
+                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary())
+            ) ::
+              struct()
+  @callback create(
+              create_attrs ::
+                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary())
+            ) ::
+              {:ok, struct()} | {:error, Ecto.Changeset.t()}
+  @callback create(
+              create_attrs :: maybe_improper_list(byte() | binary() | iolist(), binary()),
+              function_changest_from_module :: atom()
+            ) ::
               {:ok, struct()} | {:error, Ecto.Changeset.t()}
   @callback find(get_attrs :: map() | keyword()) :: nil | struct()
   @callback find_all(get_attrs :: map() | keyword()) :: [] | list(struct())

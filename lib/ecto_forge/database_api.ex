@@ -39,9 +39,22 @@ defmodule EctoForge.DatabaseApi do
   - update_or_create!(get_attrs, or_insert_update_attrs, opts )
   - update_or_create(get_attrs, or_insert_update_attrs, opts )
   """
+  @callback create!(create_attrs :: map(), function_changest_from_module :: atom()) :: struct()
+  @callback create!(create_attrs :: map()) :: struct()
+  @callback create(create_attrs :: map()) :: {:ok, struct()} | {:error, Ecto.Changeset.t()}
+  @callback create(create_attrs :: map(), function_changest_from_module :: atom()) ::
+              {:ok, struct()} | {:error, Ecto.Changeset.t()}
+  @callback find(get_attrs :: map() | keyword()) :: nil | struct()
+  @callback find_all(get_attrs :: map() | keyword()) :: [] | list(struct())
+  @callback get_all(get_attrs :: map() | keyword()) :: {:ok, list(struct())} | {:error, []}
+  @callback get(get_attrs :: map() | keyword()) :: {:ok, struct()} | {:error, any()}
+  @callback get!(get_attrs :: map() | keyword()) :: struct()
+  @callback get_all!(get_attrs :: map() | keyword()) :: list(struct())
+  # @callback get_all!(get_attrs :: map() | keyword()) :: list(struct())
   defmacro __using__(opts) do
     quote location: :keep, bind_quoted: [opts: opts] do
       @module_model opts[:module_model] || __MODULE__
+      @behaviour EctoForge.DatabaseApi
       @doc """
       ## Implements base functions for database
 
@@ -515,8 +528,8 @@ defmodule EctoForge.DatabaseApi do
       end
 
       def update_or_create(get_attrs, or_insert_update_attrs, opts \\ []) do
-        case get(get_attrs) do
-          {:ok, %@module_model{} = item} ->
+        case find(get_attrs) do
+          %@module_model{} = item ->
             update_with_another_changeset(
               item,
               or_insert_update_attrs,

@@ -4,7 +4,7 @@ defmodule EctoForge.MixProject do
   def project do
     [
       app: :ecto_forge,
-      version: "0.1.9",
+      version: "0.1.10",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),

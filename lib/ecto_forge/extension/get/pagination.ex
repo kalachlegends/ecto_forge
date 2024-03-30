@@ -1,7 +1,7 @@
 defmodule EctoForge.Extension.Get.Pagination do
   @moduledoc """
-  # Paginate your Model
-
+  ## Paginate your Model
+  ## conect to your instanse
   ```elixir
   use EctoForge.CreateInstance,
   extensions_get: [
@@ -10,17 +10,15 @@ defmodule EctoForge.Extension.Get.Pagination do
     repo: MyApp.Repo
     ```
 
-    ## When you coonnect
-    You can use Api https://hexdocs.pm/filtery/readme.html
-    ### Example
+  ### Example
 
-    ```elixir
-    {:ok, %{count_data: 30, data: list}} = MyApp.Model.get_all(%{pagination: %{page: 1})
-    ```
+  ```elixir
+  {:ok, %{count_data: 30, data: list}} = MyApp.Model.get_all(%{pagination: %{page: 1}})
+  ```
 
-      ```elixir
-    {:ok, %{count_data: 30, data: list}} = MyApp.Model.get_all(%{pagination: %{page: 2, limit: 5})
-    ```
+  ```elixir
+  {:ok, %{count_data: 30, data: list}} = MyApp.Model.get_all(%{pagination: %{page: 2, limit: 5}})
+  ```
   """
   import Ecto.Query
   use EctoForge.CreateExtension.Get

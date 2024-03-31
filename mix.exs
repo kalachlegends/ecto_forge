@@ -59,7 +59,7 @@ defmodule EctoForge.MixProject do
           EctoForge.Extension.Get.OnlyQuery,
           EctoForge.Extension.Get.Select,
           EctoForge.Extension.Get.Pagination,
-          EctoForge.Expections.Get.QueryFunction
+          EctoForge.Extension.Get.QueryFunction
         ],
         Utls: [
           EctoForge.Utls.ExecuteExtension,

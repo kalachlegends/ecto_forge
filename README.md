@@ -30,8 +30,8 @@ defmodule MyApp.EctoForgeInstanseBase do
         EctoForge.Extension.Get.Aggregate,
         EctoForge.Extension.Get.Select,
         EctoForge.Extension.Get.Pagination,
-        EctoForge.Expections.Get.QueryFunction
         EctoForge.Extension.Get.OnlyQuery,
+        EctoForge.Extension.Get.QueryFunction
     ],
     repo: MyApp.Repo
 end

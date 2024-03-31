@@ -43,4 +43,8 @@ defmodule EctoForgeTest do
     assert %UserModel{} = user
     assert is_nil(Map.get(user, :id))
   end
+
+  test "test context fields" do
+    assert [:id, :name] == User.Context.fields()
+  end
 end

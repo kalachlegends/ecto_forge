@@ -4,7 +4,7 @@ defmodule EctoForge.MixProject do
   def project do
     [
       app: :ecto_forge,
-      version: "0.1.10",
+      version: "0.1.11",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -56,7 +56,10 @@ defmodule EctoForge.MixProject do
           EctoForge.Extension.Get.Limit,
           EctoForge.Extension.Get.OrderBy,
           EctoForge.Extension.Get.Aggregate,
-          EctoForge.Extension.Get.OnlyQuery
+          EctoForge.Extension.Get.OnlyQuery,
+          EctoForge.Extension.Get.Select,
+          EctoForge.Extension.Get.Pagination,
+          EctoForge.Expections.Get.QueryFunction
         ],
         Utls: [
           EctoForge.Utls.ExecuteExtension,

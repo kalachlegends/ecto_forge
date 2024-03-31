@@ -22,13 +22,16 @@ This module allows on-the-go editing of contexts, extensions, and providing basi
 defmodule MyApp.EctoForgeInstanseBase do
   use EctoForge.CreateInstance,
     extensions_get: [
-      EctoForge.Extension.Get.Preload, # By EctoForge Exstensions
-      EctoForge.Extension.Get.Filter,
-      EctoForge.Extension.Get.Last,
-      EctoForge.Extension.Get.Limit,
-      EctoForge.Extension.Get.OrderBy,
-      EctoForge.Extension.Get.Aggregate,
-      EctoForge.Extension.Get.OnlyQuery,
+        EctoForge.Extension.Get.Preload,
+        EctoForge.Extension.Get.Filter,
+        EctoForge.Extension.Get.Last,
+        EctoForge.Extension.Get.Limit,
+        EctoForge.Extension.Get.OrderBy,
+        EctoForge.Extension.Get.Aggregate,
+        EctoForge.Extension.Get.Select,
+        EctoForge.Extension.Get.Pagination,
+        EctoForge.Expections.Get.QueryFunction
+        EctoForge.Extension.Get.OnlyQuery,
     ],
     repo: MyApp.Repo
 end
@@ -147,7 +150,7 @@ by adding `ecto_forge` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ecto_forge, "~> 0.1.10"}
+    {:ecto_forge, "~> 0.1.11"}
   ]
 end
 ```

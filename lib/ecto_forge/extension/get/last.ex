@@ -28,7 +28,8 @@ defmodule EctoForge.Extension.Get.Last do
   def before_query_add_extension_to_get(_module, _mode, _repo, _l_ex, query, attrs) do
     {last_attrs, _} = Access.pop(attrs, :last)
 
-    if is_list(last_attrs) or is_map(last_attrs) or is_atom(last_attrs) do
+    if is_list(last_attrs) or is_map(last_attrs) or
+         (is_atom(last_attrs) and not is_nil(last_attrs)) do
       {last(query, last_attrs), attrs}
     else
       {query, attrs}

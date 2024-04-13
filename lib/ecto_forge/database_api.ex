@@ -39,32 +39,200 @@ defmodule EctoForge.DatabaseApi do
   - update_or_create!(get_attrs, or_insert_update_attrs, opts )
   - update_or_create(get_attrs, or_insert_update_attrs, opts )
   """
+  @doc """
+  # do another changeset in your model with Repo.insert!()
+  ## example
+
+  ```elixir
+  "@module_model".create(%{name: "artem"}, :another_changeset_in_your_module_model)
+  ```
+  """
   @callback create!(
               create_attrs ::
-                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary()),
+                map() | keyword(),
               function_changest_from_module :: atom()
             ) :: struct()
+
+  @doc """
+  # do changeset with Repo.insert!()
+  ## example
+
+  ```elixir
+  "@module_model".create(%{name: "artem"})
+  ```
+  """
   @callback create!(
               create_attrs ::
-                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary())
+                map() | keyword()
             ) ::
               struct()
+
+  @doc """
+  # do changeset with Repo.insert()
+  ## example
+
+  ```elixir
+  {:ok, _}= "@module_model".create(%{name: "artem"})
+  ```
+  """
   @callback create(
               create_attrs ::
-                map() | keyword() | maybe_improper_list(byte() | binary() | iolist(), binary())
+                map() | keyword()
             ) ::
               {:ok, struct()} | {:error, Ecto.Changeset.t()}
+
+  @doc """
+  # do another changeset in your model with Repo.insert!()
+  ## example
+
+  ```elixir
+  "@module_model".create!(%{name: "artem"}, :function_changest_from_module)
+  ```
+  """
   @callback create(
               create_attrs :: maybe_improper_list(byte() | binary() | iolist(), binary()),
               function_changest_from_module :: atom()
             ) ::
               {:ok, struct()} | {:error, Ecto.Changeset.t()}
+
+  @doc """
+  # find something in your  "@module_model"  execut your extension and can be filtered or
+  ## example
+
+  ```elixir
+  nil_or_sturct = "@module_model".find(%{filter: %{name: "some"}})
+  ```
+  """
   @callback find(get_attrs :: map() | keyword()) :: nil | struct()
+  @doc """
+  # execut your extension and can be filtered or
+  ## example
+
+  ```elixir
+  nil_or_sturct = "@module_model".find(%{filter: %{name: "some"}})
+  ```
+  """
   @callback find_all(get_attrs :: map() | keyword()) :: [] | list(struct())
-  @callback get_all(get_attrs :: map() | keyword()) :: {:ok, list(struct())} | {:error, []}
+  @doc """
+  # execut your extension get and can be filtered
+  if not found
+  ## example
+
+  ```elixir
+  {:ok, [@module_model]} = "@module_model".get_all(%{filter: %{name: "some"}})
+  ```
+  """
+
+  @callback get_all(get_attrs :: map() | keyword()) :: {:ok, list(struct())} | {:error, any()}
+  @doc """
+  # execut your extension get and can be filtered
+  if not found
+  ## example
+
+  ```elixir
+  {:ok, @module_model} = "@module_model".get(%{filter: %{name: "some"}})
+  ```
+  """
   @callback get(get_attrs :: map() | keyword()) :: {:ok, struct()} | {:error, any()}
+  @doc """
+  # execut your extension get and can be filtered
+  if not found do error `Ecto.NoResultsError`
+  ## example
+
+  ```elixir
+  @module_model = "@module_model".get(%{filter: %{name: "some"}})
+  ```
+  """
   @callback get!(get_attrs :: map() | keyword()) :: struct()
+  @doc """
+  # execut your extension get and can be filtered
+  if not found do error `Ecto.NoResultsError`
+  ## example
+
+  ```elixir
+  {:ok, [@module_model]} = "@module_model".get_all(%{filter: %{name: "some"}})
+  ```
+  """
   @callback get_all!(get_attrs :: map() | keyword()) :: list(struct())
+  @doc """
+  # do your changeset with @module_model and Repo.update()
+  ## example
+  ```elixir
+  {:ok, _update} "@module_model".update(%{})
+  ```
+  """
+  @callback update(item :: struct(), opts :: map() | keyword(), attrs :: keyword()) ::
+              {:ok, struct()} | {:error, struct()}
+  @doc """
+  # do your changeset with @module_model and Repo.update!()
+  ## example
+  ```elixir
+  @module_model = "@module_model".update!(%{})
+  ```
+  """
+  @callback update!(item :: struct(), opts :: map() | keyword(), attrs :: keyword()) ::
+              {:ok, struct()} | {:error, struct()}
+  @doc """
+  ## delete your Model by struct do Repo.delete()
+  ```elixir
+  {:ok, Ecto.Schema.t()} = "@module_model".delete(@module_model)
+  ```
+  ## you can use filter if you pass on %{filter: %{}}
+
+  ```elixir
+   {:ok, Ecto.Schema.t()} = "@module_model".delete(%{filter: %{id: 1}})
+  ```
+  """
+  @callback delete(item :: struct() | map() | keyword()) ::
+              {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
+
+  @doc """
+  ## delete your Model by struct do Repo.delete!()
+  ```elixir
+  {:ok, Ecto.Schema.t()} = "@module_model".delete(@module_model)
+  ```
+  ## you can use filter if you pass on %{filter: %{}}
+  ```elixir
+   Ecto.Schema.t() = "@module_model".delete(%{filter: %{id: 1}})
+  ```
+  """
+  @callback delete!(item :: struct() | map() | keyword()) ::
+              Ecto.Schema.t()
+
+  @doc """
+  ## do @module_model.get!() if got and  do @module_model.update!()
+  ## example
+
+  ```elixir
+  {:ok, @module_model} = @module_model.update_by_opts(%{id: 1}, %{name: ""})
+  ```
+  """
+  @callback update_by_opts(
+              get_opts :: map() | keyword(),
+              update_opts :: keyword() | map(),
+              attrs :: list()
+            ) ::
+              {:ok, struct()}
+              | {:error, Ecto.Changeset.t()}
+              | {:error, :not_found}
+              | {:error, any()}
+
+  @doc """
+  ## do @module_model.get!() if got and  do @module_model.update!()
+  if error raise
+  ## example
+
+  ```elixir
+  @module_model = @module_model.update_by_opts!(%{id: 1}, %{name: ""})
+  ```
+  """
+  @callback update_by_opts!(
+              get_opts :: map() | keyword(),
+              update_opts :: keyword() | map(),
+              attrs :: list()
+            ) ::
+              struct()
+
   # @callback get_all!(get_attrs :: map() | keyword()) :: list(struct())
   defmacro __using__(opts) do
     quote location: :keep, bind_quoted: [opts: opts] do
@@ -96,7 +264,7 @@ defmodule EctoForge.DatabaseApi do
       - update_with_another_changeset(%@module_model{} = item, opts, function_atom)  # return {:ok, item} or {:error, result}
       - delete(%@module_model{} or opts_for_get) # result {:ok, _} or {:error, _}
       - delete!(%@module_model{} or opts_for_get!) # result {:ok, _} or {:error, _}
-        - update_or_create!(get_attrs, or_insert_update_attrs, opts )
+      - update_or_create!(get_attrs, or_insert_update_attrs, opts )
       - update_or_create(get_attrs, or_insert_update_attrs, opts )
 
       """
@@ -117,16 +285,6 @@ defmodule EctoForge.DatabaseApi do
         extensions_get: opts[:extensions_get],
         module_model: @module_model
 
-      @doc """
-      ## Creates and does structure insert by default pulls the changeset function from `#{@module_model}`.
-
-      Returns `{{:ok, item}` or `{:error, error_changeset}`.
-      ## Example
-       ```elixir
-      #{@module_model}.create(%{name: "artem"})
-
-      ```
-      """
       def create(map) do
         map = ExecuteExtensionEvents.exucute_before_created(map, @extensions_events)
 
@@ -135,17 +293,6 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_created(@extensions_events)
       end
 
-      @doc """
-      ## Creates and makes insert structures, together with the changeset function
-
-      Returns `{:ok, item}` or `{:error, error_changeset}`.
-      ## Example
-      ```elixir
-      #{@module_model}.create(%{name: "artem"}, :changeset_register)
-
-      ```
-
-      """
       def create(map, function) do
         map = ExecuteExtensionEvents.exucute_before_created(map, @extensions_events)
 
@@ -154,16 +301,6 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_created(@extensions_events)
       end
 
-      @doc """
-      ## Creates and does structure insert by default pulls the changeset function from `#{@module_model}`.
-
-      Returns `{:ok, item}` or `{:error, error_changeset}`.
-      ## Example
-      ```elixir
-      #{@module_model}.create(%{name: "artem"})
-
-      ```
-      """
       def create!(map) do
         map = ExecuteExtensionEvents.exucute_before_created!(map, @extensions_events)
 
@@ -172,17 +309,6 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_created!(@extensions_events)
       end
 
-      @doc """
-      ## Creates and makes insert structures, together with the changeset function
-
-      Returns `{:ok, item}` or `{:error, error_changeset}`.
-      ## Example
-      ```elixir
-      #{@module_model}.create(%{name: "artem"}, :changeset_register)
-
-      ```
-
-      """
       def create!(map, function) do
         map = ExecuteExtensionEvents.exucute_before_created!(map, @extensions_events)
 
@@ -222,13 +348,6 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ##   Returns a structure by its id or by matching the value of the structure's fields
-
-      ```elixir
-      #{@module_model}.find(id: id) # nil or item
-      ```
-      """
       def find(opts) when is_list(opts) or is_map(opts) do
         try do
           query_bindings(opts, :one)
@@ -238,18 +357,6 @@ defmodule EctoForge.DatabaseApi do
         |> get_helper_after
       end
 
-      @doc """
-      ## Returns a structure by its id or by matching the value of the structure's fields
-
-      ## Example
-      ```elixir
-      iex -> #{@module_model}.get(
-        type_private: :public,
-      )
-      iex -> {:ok, #{@module_model}} # or {:error, #{@module_model}}
-      ```
-
-      """
       def get(item_id_or_opts) do
         case find(item_id_or_opts) do
           %@module_model{} = item -> {:ok, item}
@@ -257,33 +364,13 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## Returns a structure by its id or by matching the value of the structure's fields
-
-      ## Example
-      ```elixir
-      iex -> #{@module_model}.get!(
-        type_private: :public,
-      )
-      iex -> #{@module_model} # or throw()
-      ```
-
-      """
       def get!(item_id_or_opts) do
         case find(item_id_or_opts) do
           %@module_model{} = item -> item
-          nil -> throw(%Ecto.NoResultsError{message: "#{inspect(%@module_model{})} not found"})
+          nil -> throw(%Ecto.NoResultsError{message: "#{inspect(@module_model)} not found"})
         end
       end
 
-      @doc """
-      ## Gets or adds an entry if not found
-      ## Example
-      ```elixir
-      #{@module_model}.get_or_insert(%{user_id: ""}, %{login: "12", password: "1234"})
-      ```
-
-      """
       def get_or_insert(attrs_get, attrs_create) do
         case get(attrs_get) do
           {:ok, user} -> {:ok, user}
@@ -291,39 +378,11 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## reurn true false if model exists
-      ## Example
-      ```elixir
-      #{@module_model}.exists(id: 1)
-      ```
-
-      """
       def exists?(opts) when is_list(opts) or is_map(opts) do
         get!(opts)
         |> @repo.exists?()
       end
 
-      @doc """
-      ## Returns a list of all available structures or matching structure field values
-      ## The most important thing to understand
-      In get_all you can pass map or keyword list everything will fall where
-      #{@module_model}.get_all(%{status: 1}))
-      will equate to `#{@module_model}|> where(%{status: 1)`
-
-      #{@module_model}.get_all(%{preload: [:posts]})
-      will equate to `#{@module_model}|> preload( [:user])`
-      ## Example
-      ```elixir
-      ##{@module_model}.get_all(
-        type_private: :public,
-      )
-      ```
-
-
-
-
-      """
       def find_all(opts \\ nil) do
         try do
           query_bindings(opts, :all)
@@ -333,17 +392,6 @@ defmodule EctoForge.DatabaseApi do
         |> get_helper_after
       end
 
-      @doc """
-      ## Returns a list of all available structures or matching structure field values
-      ## example
-      ```elixir
-      iex-> #{@module_model}.get_all(
-      type_private: :public,
-      )
-      iex-> {:ok, [#{@module_model}]}  or {:error, #{@not_found_message}}
-      ```
-      """
-
       def get_all(opts \\ nil) do
         case find_all(opts) do
           [] -> {:error, @not_found_message}
@@ -351,17 +399,6 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## Returns a list of all available structures or matching structure field values
-      ## example
-      ```elixir
-      iex-> #{@module_model}.get_all!(
-      type_private: :public,
-      )
-      iex->  [#{@module_model}]  or throw(no_results)
-      ```
-
-      """
       def get_all!(item_id_or_opts \\ nil) do
         case find_all(item_id_or_opts) do
           [] -> throw(%Ecto.NoResultsError{message: "#{inspect(%@module_model{})} not found"})
@@ -369,13 +406,6 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## Update structure with another changeset
-
-      iex -> update_with_another_changeset(#{@module_model}, %{update_attrs: ""}, :function_in_changeset)
-
-      the third argument is the function that is in the module
-      """
       def update_with_another_changeset(%@module_model{} = item, opts, function_atom, attrs \\ [])
           when is_atom(function_atom) do
         opts = ExecuteExtensionEvents.exucute_before_updated!(opts, @extensions_events)
@@ -386,13 +416,6 @@ defmodule EctoForge.DatabaseApi do
           |> ExecuteExtensionEvents.exucute_after_updated!(@extensions_events)
       end
 
-      @doc """
-       ## Updating a structure with another changeset throws throw
-
-      iex -> update_with_another_changeset!(#{@module_model}, %{update_attrs: ""}, :function_in_changeset))
-
-      the third argument is the function that is in the module
-      """
       def update_with_another_changeset!(
             %@module_model{} = item,
             opts,
@@ -408,12 +431,6 @@ defmodule EctoForge.DatabaseApi do
           |> ExecuteExtensionEvents.exucute_after_updated!(@extensions_events)
       end
 
-      @doc """
-      ## Update item %{}
-      ```elixir
-      iex ->  update(#{@module_model}, %{update_attrs: ""}, repo.update.attrs)
-      ```
-      """
       def update(%@module_model{} = item, opts, attrs \\ []) do
         opts = ExecuteExtensionEvents.exucute_before_updated(opts, @extensions_events)
 
@@ -424,10 +441,6 @@ defmodule EctoForge.DatabaseApi do
           |> ExecuteExtensionEvents.exucute_after_updated(@extensions_events)
       end
 
-      @doc """
-          ## Updates item record, %{}, throws exception
-      iex -> `update!(#{@module_model}, %{update_attrs: ""}, repo.update
-      """
       def update!(%@module_model{} = item, opts, attrs \\ []) do
         opts = ExecuteExtensionEvents.exucute_before_updated!(opts, @extensions_events)
 
@@ -437,15 +450,6 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_updated!(@extensions_events)
       end
 
-      @doc """
-      ## Gets the structure with #{@module_model}.get(get_opts) and updates it
-
-      iex -> update_by_opts(%{id: 1} %{update_attrs: "asd"}, []) third parameter for
-
-      ## Returns
-      {:ok, _}
-      {:error, _}
-      """
       def update_by_opts(get_opts, update_opts, attrs \\ []) do
         with {:ok, item} <- get(get_opts),
              {:ok, item} <- update(item, update_opts, attrs) do
@@ -453,25 +457,12 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## Gets the structure with #{@module_model}.get(get_opts) and updates it
-
-      iex -> update_by_opts(#{@module_model} %{update_attrs: "asd"}, []) third parameter for the
-      """
       def update_by_opts!(get_opts, update_opts, attrs \\ []) do
         res =
           get!(get_opts)
           |> update!(update_opts, attrs)
       end
 
-      @doc """
-      ## delete by #{@module_model}
-
-      ```elixir
-      iex -> delete(#{@module_model})
-      iex -> {:ok, _} # or {:error, _}
-      ```
-      """
       def delete(%@module_model{} = item) do
         item = ExecuteExtensionEvents.exucute_before_deleted(item, @extensions_events)
 
@@ -483,14 +474,6 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## delete by #{@module_model}
-
-      ```elixir
-      iex -> delete!(#{@module_model})
-      iex ->  ok or throw
-      ```
-      """
       def delete!(%@module_model{} = item) do
         ExecuteExtensionEvents.exucute_before_deleted!(item, @extensions_events)
 
@@ -499,18 +482,11 @@ defmodule EctoForge.DatabaseApi do
           |> ExecuteExtensionEvents.exucute_after_deleted!(@extensions_events)
       end
 
-      @doc """
-      ## get structure and delete it using functions #{@module_model}.get(%{}) |> #{@module_model}.delete
-      """
       def delete!(item_id_or_opts) when is_map(item_id_or_opts) or is_binary(item_id_or_opts) do
         get!(item_id_or_opts)
         |> delete!()
       end
 
-      @doc """
-      ## get structure and delete it using functions #{@module_model}.get(%{}) |> #{@module_model}.delete
-
-      """
       def delete(item_id_or_opts) do
         with {:ok, item} <- get(item_id_or_opts),
              {:ok, item} <- delete(item) do
@@ -518,16 +494,6 @@ defmodule EctoForge.DatabaseApi do
         end
       end
 
-      @doc """
-      ## do update or create
-
-      ## Example
-
-      ```elixir
-      # attrs_updat_or_insert
-      #{@module_model}.update_or_create!(%{filter: %{artem: "artem"}, %{artem: "artem"}})
-      ```
-      """
       def update_or_create!(get_attrs, or_insert_update_attrs, opts \\ []) do
         case find(get_attrs) do
           %@module_model{} = item ->

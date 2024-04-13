@@ -4,7 +4,7 @@ defmodule EctoForge.MixProject do
   def project do
     [
       app: :ecto_forge,
-      version: "0.1.11",
+      version: "0.1.13",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -50,8 +50,9 @@ defmodule EctoForge.MixProject do
           EctoForge.CreateExtension.Get
         ],
         "Extensions Get": [
-          EctoForge.Extension.Get.Preload,
+          EctoForge.Extension.Get.FilterError,
           EctoForge.Extension.Get.Filter,
+          EctoForge.Extension.Get.Preload,
           EctoForge.Extension.Get.Last,
           EctoForge.Extension.Get.Limit,
           EctoForge.Extension.Get.OrderBy,

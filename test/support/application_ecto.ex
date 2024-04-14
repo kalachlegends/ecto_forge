@@ -1,4 +1,4 @@
-defmodule EctoForge.Application do
+defmodule EctoForge.ApplicationTest do
   use Application
 
   def start(_type, _args) do

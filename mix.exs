@@ -20,7 +20,6 @@ defmodule EctoForge.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {EctoForge.Application, []},
       extra_applications: [:logger]
     ]
   end

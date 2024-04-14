@@ -1,5 +1,5 @@
 defmodule EctoForge.Helpers.QueryBinderGet do
-  import Ecto.Query
+  import Ecto.Query, only: [from: 2]
   # alias EctoForge.Helpers.RepoBase.Utls.MapUtls
   alias EctoForge.Utls.ExecuteExtension
 

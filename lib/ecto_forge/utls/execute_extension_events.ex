@@ -1,5 +1,4 @@
 defmodule EctoForge.Utls.ExecuteExtensionEvents do
-  @spec exucute_before_created!(maybe_improper_list(), any()) :: any()
   def exucute_before_created!(result, extensions) when is_list(extensions) do
     Enum.reduce(extensions, result, fn ext, acc -> ext.on_created!(acc) end)
   end

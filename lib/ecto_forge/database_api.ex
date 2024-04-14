@@ -40,35 +40,35 @@ defmodule EctoForge.DatabaseApi do
   - update_or_create(get_attrs, or_insert_update_attrs, opts )
   """
   @doc """
-  # do another changeset in your model with Repo.insert!()
-  ## example
+  do another changeset in your model with Repo.insert!()
+  ### example
 
   ```elixir
   "@module_model".create(%{name: "artem"}, :another_changeset_in_your_module_model)
   ```
   """
   @callback create!(
-              create_attrs ::
+              map ::
                 map() | keyword(),
-              function_changest_from_module :: atom()
+              function :: atom()
             ) :: struct()
 
   @doc """
-  # do changeset with Repo.insert!()
-  ## example
+  do changeset with Repo.insert!()
+  ### example
 
   ```elixir
   "@module_model".create(%{name: "artem"})
   ```
   """
   @callback create!(
-              create_attrs ::
+              map ::
                 map() | keyword()
             ) ::
               struct()
 
   @doc """
-  # do changeset with Repo.insert()
+   do changeset with Repo.insert()
   ## example
 
   ```elixir
@@ -82,22 +82,22 @@ defmodule EctoForge.DatabaseApi do
               {:ok, struct()} | {:error, Ecto.Changeset.t()}
 
   @doc """
-  # do another changeset in your model with Repo.insert!()
-  ## example
+  do another changeset in your model with Repo.insert!()
+  ### example
 
   ```elixir
   "@module_model".create!(%{name: "artem"}, :function_changest_from_module)
   ```
   """
   @callback create(
-              create_attrs :: maybe_improper_list(byte() | binary() | iolist(), binary()),
+              create_attrs :: map() | keyword(),
               function_changest_from_module :: atom()
             ) ::
               {:ok, struct()} | {:error, Ecto.Changeset.t()}
 
   @doc """
-  # find something in your  "@module_model"  execut your extension and can be filtered or
-  ## example
+  find something in your  "@module_model"  execut your extension and can be filtered or
+  ### example
 
   ```elixir
   nil_or_sturct = "@module_model".find(%{filter: %{name: "some"}})
@@ -105,8 +105,8 @@ defmodule EctoForge.DatabaseApi do
   """
   @callback find(get_attrs :: map() | keyword()) :: nil | struct()
   @doc """
-  # execut your extension and can be filtered or
-  ## example
+  execut your extension and can be filtered or
+  ### example
 
   ```elixir
   nil_or_sturct = "@module_model".find(%{filter: %{name: "some"}})
@@ -114,9 +114,9 @@ defmodule EctoForge.DatabaseApi do
   """
   @callback find_all(get_attrs :: map() | keyword()) :: [] | list(struct())
   @doc """
-  # execut your extension get and can be filtered
+  execut your extension get and can be filtered
   if not found
-  ## example
+  ### example
 
   ```elixir
   {:ok, [@module_model]} = "@module_model".get_all(%{filter: %{name: "some"}})
@@ -125,9 +125,9 @@ defmodule EctoForge.DatabaseApi do
 
   @callback get_all(get_attrs :: map() | keyword()) :: {:ok, list(struct())} | {:error, any()}
   @doc """
-  # execut your extension get and can be filtered
+  execut your extension get and can be filtered
   if not found
-  ## example
+  ### example
 
   ```elixir
   {:ok, @module_model} = "@module_model".get(%{filter: %{name: "some"}})
@@ -135,9 +135,9 @@ defmodule EctoForge.DatabaseApi do
   """
   @callback get(get_attrs :: map() | keyword()) :: {:ok, struct()} | {:error, any()}
   @doc """
-  # execut your extension get and can be filtered
+  execut your extension get and can be filtered
   if not found do error `Ecto.NoResultsError`
-  ## example
+  ### example
 
   ```elixir
   @module_model = "@module_model".get(%{filter: %{name: "some"}})
@@ -145,9 +145,9 @@ defmodule EctoForge.DatabaseApi do
   """
   @callback get!(get_attrs :: map() | keyword()) :: struct()
   @doc """
-  # execut your extension get and can be filtered
+  execut your extension get and can be filtered
   if not found do error `Ecto.NoResultsError`
-  ## example
+  ### example
 
   ```elixir
   {:ok, [@module_model]} = "@module_model".get_all(%{filter: %{name: "some"}})
@@ -155,8 +155,8 @@ defmodule EctoForge.DatabaseApi do
   """
   @callback get_all!(get_attrs :: map() | keyword()) :: list(struct())
   @doc """
-  # do your changeset with @module_model and Repo.update()
-  ## example
+  do your changeset with @module_model and Repo.update()
+  ### example
   ```elixir
   {:ok, _update} "@module_model".update(%{})
   ```
@@ -164,8 +164,8 @@ defmodule EctoForge.DatabaseApi do
   @callback update(item :: struct(), opts :: map() | keyword(), attrs :: keyword()) ::
               {:ok, struct()} | {:error, struct()}
   @doc """
-  # do your changeset with @module_model and Repo.update!()
-  ## example
+  do your changeset with @module_model and Repo.update!()
+  ### example
   ```elixir
   @module_model = "@module_model".update!(%{})
   ```
@@ -173,11 +173,11 @@ defmodule EctoForge.DatabaseApi do
   @callback update!(item :: struct(), opts :: map() | keyword(), attrs :: keyword()) ::
               {:ok, struct()} | {:error, struct()}
   @doc """
-  ## delete your Model by struct do Repo.delete()
+  delete your Model by struct do Repo.delete()
   ```elixir
   {:ok, Ecto.Schema.t()} = "@module_model".delete(@module_model)
   ```
-  ## you can use filter if you pass on %{filter: %{}}
+  ### you can use filter if you pass on %{filter: %{}}
 
   ```elixir
    {:ok, Ecto.Schema.t()} = "@module_model".delete(%{filter: %{id: 1}})
@@ -187,11 +187,11 @@ defmodule EctoForge.DatabaseApi do
               {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
 
   @doc """
-  ## delete your Model by struct do Repo.delete!()
+  delete your Model by struct do Repo.delete!()
   ```elixir
   {:ok, Ecto.Schema.t()} = "@module_model".delete(@module_model)
   ```
-  ## you can use filter if you pass on %{filter: %{}}
+  you can use filter if you pass on %{filter: %{}}
   ```elixir
    Ecto.Schema.t() = "@module_model".delete(%{filter: %{id: 1}})
   ```
@@ -200,8 +200,8 @@ defmodule EctoForge.DatabaseApi do
               Ecto.Schema.t()
 
   @doc """
-  ## do @module_model.get!() if got and  do @module_model.update!()
-  ## example
+  do @module_model.get!() if got and  do @module_model.update!()
+  ### example
 
   ```elixir
   {:ok, @module_model} = @module_model.update_by_opts(%{id: 1}, %{name: ""})
@@ -218,9 +218,9 @@ defmodule EctoForge.DatabaseApi do
               | {:error, any()}
 
   @doc """
-  ## do @module_model.get!() if got and  do @module_model.update!()
+  do @module_model.get!() if got and  do @module_model.update!()
   if error raise
-  ## example
+  ### example
 
   ```elixir
   @module_model = @module_model.update_by_opts!(%{id: 1}, %{name: ""})
@@ -293,7 +293,7 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_created(@extensions_events)
       end
 
-      def create(map, function) do
+      def create(map, function) when is_atom(function) do
         map = ExecuteExtensionEvents.exucute_before_created(map, @extensions_events)
 
         apply(@module_model, function, [%@module_model{}, map])
@@ -309,7 +309,7 @@ defmodule EctoForge.DatabaseApi do
         |> ExecuteExtensionEvents.exucute_after_created!(@extensions_events)
       end
 
-      def create!(map, function) do
+      def create!(map, function) when is_atom(function) do
         map = ExecuteExtensionEvents.exucute_before_created!(map, @extensions_events)
 
         res =

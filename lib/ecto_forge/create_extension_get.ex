@@ -82,7 +82,6 @@ defmodule EctoForge.CreateExtension.Get do
   use EctoForge.CreateExtension.Get
 
   def before_query_add_extension_to_get(_module, _mode, _repo, _list_exetensions_executed, query, attrs) do
-    preload_attrs = Utls.MapUtls.opts_to_map(attrs)
     attrs = Keyword.delete(attrs, :preload)
 
     if is_list(preload_attrs) do

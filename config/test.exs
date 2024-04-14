@@ -1,3 +1,5 @@
+import Config
+
 config :ecto_forge, EctoForge.Repo,
   database: "ecto_forge#{System.get_env("MIX_TEST_PARTITION")}",
   username: "nov",

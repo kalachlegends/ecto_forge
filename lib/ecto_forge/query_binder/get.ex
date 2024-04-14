@@ -19,7 +19,7 @@ defmodule EctoForge.Helpers.QueryBinderGet do
       @extensions_get opts[:extensions_get] || []
 
       def query_bindings(opts \\ %{}, mode \\ :one, query_other \\ false) do
-        as_var = @module_model.__schema__(:source) |> normalize_atom
+        as_var = @module_model.__schema__(:source)
         query = query_other || from(i in @module_model, as: ^as_var)
 
         result =
@@ -67,11 +67,6 @@ defmodule EctoForge.Helpers.QueryBinderGet do
 
         result
       end
-
-      defp normalize_atom(atom) when is_atom(atom), do: atom
-      defp normalize_atom(atom) when is_binary(atom), do: atom |> String.to_atom()
-
-      # end
     end
   end
 end

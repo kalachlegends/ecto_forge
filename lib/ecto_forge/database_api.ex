@@ -436,7 +436,7 @@ defmodule EctoForge.DatabaseApi do
 
         res =
           item
-          |> @module_model.changeset(EctoForge.Helpers.RepoBase.Utls.MapUtls.opts_to_map(opts))
+          |> @module_model.changeset(opts)
           |> @repo.update(attrs)
           |> ExecuteExtensionEvents.exucute_after_updated(@extensions_events)
       end
@@ -445,7 +445,7 @@ defmodule EctoForge.DatabaseApi do
         opts = ExecuteExtensionEvents.exucute_before_updated!(opts, @extensions_events)
 
         item
-        |> @module_model.changeset(EctoForge.Helpers.RepoBase.Utls.MapUtls.opts_to_map(opts))
+        |> @module_model.changeset(opts)
         |> @repo.update!(attrs)
         |> ExecuteExtensionEvents.exucute_after_updated!(@extensions_events)
       end

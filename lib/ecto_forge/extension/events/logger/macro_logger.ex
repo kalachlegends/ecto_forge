@@ -6,6 +6,7 @@ defmodule EctoForge.Extension.Events.Logger.MacroLogger do
   ```elixir
 
   ## this module
+  import EctoForge.Extension.Events.Logger.MacroLogger
   use Support.EctoForgeInstanceTest,
     extensions_events_additional: [
       define_log(TestModule, message: "artemka")

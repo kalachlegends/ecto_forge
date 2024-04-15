@@ -33,7 +33,7 @@ defmodule EctoForge.Utls.ExecuteExtensionEvents do
 
   @spec exucute_before_updated(any(), maybe_improper_list()) :: any()
   def exucute_before_updated(result, extensions) when is_list(extensions) do
-    Enum.reduce(extensions, result, fn ext, acc -> ext.on_updated(acc) end)
+    Enum.reduce(extensions, result, fn ext, acc -> ext.before_updated(acc) end)
   end
 
   def exucute_before_deleted(result, extensions) when is_list(extensions) do
@@ -45,7 +45,7 @@ defmodule EctoForge.Utls.ExecuteExtensionEvents do
   end
 
   def exucute_before_updated!(result, extensions) when is_list(extensions) do
-    Enum.reduce(extensions, result, fn ext, acc -> ext.on_updated!(acc) end)
+    Enum.reduce(extensions, result, fn ext, acc -> ext.before_updated!(acc) end)
   end
 
   def exucute_before_deleted!(result, extensions) when is_list(extensions) do

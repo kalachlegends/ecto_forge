@@ -3,7 +3,6 @@ defmodule Tests.Exetensions.SelectTest do
 
   use EctoForge.RepoCase
   alias EctoForgeTest.UserModel
-  @tag run: true
   test "Test  EctoForge.Extension.Get.Select" do
     user = EctoForge.Repo.insert!(%UserModel{name: "artem"})
 

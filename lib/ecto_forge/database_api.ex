@@ -10,10 +10,20 @@ defmodule EctoForge.DatabaseApi do
             [
               repo: MyApp.Repo, # required param
               extensions_get: [], # default list
-              extensions_events: [] # default list
+              extensions_events: [], # default list
+              extensions_events_additional: [], # this don't rewrite  extensions_get when you use EctoForge.Instanse
+              extensions_get_additional: [], # this don't rewrite  extensions_get when you use EctoForge.Instanse
             ]
           )
   ```
+  ### addinotal
+  if you use through use `EctoForge.CreateInstance`
+
+  you can rewrite `extensions_get` `extensions_events`
+  with extensions_events_additional
+
+
+
   functions find_all, works only with extension `EctoForge.Extension.Get.Preload`, `EctoForge.Extension.Get.Filter` or you can write yours own
 
   This module creates an instance of the database all functions function. It can be used through the use of Parameter
@@ -271,11 +281,14 @@ defmodule EctoForge.DatabaseApi do
 
       @repo opts[:repo]
 
-      @extensions_events opts[:extensions_events] || []
+      @extensions_events_additional opts[:extensions_events_additional] || []
+      @extensions_get_additional opts[:extensions_get_additional] || []
+      @extensions_events (opts[:extensions_events] || []) ++ @extensions_events_additional
+      @extensions_get (opts[:extensions_events] || []) ++ @extensions_get_additional
 
       @ignore_fields opts[:ignore_fields] || []
-      @extensions_get opts[:extensions_get] || []
       @not_found_message opts[:error_message] || :not_found
+
       if length(@extensions_get) == 0 do
         :logger.warning("extensions_get give [], expect [Some.Extesnisons]")
       end
@@ -367,7 +380,7 @@ defmodule EctoForge.DatabaseApi do
       def get!(item_id_or_opts) do
         case find(item_id_or_opts) do
           %@module_model{} = item -> item
-          nil -> throw(%Ecto.NoResultsError{message: "#{inspect(@module_model)} not found"})
+          nil -> raise(%Ecto.NoResultsError{message: "#{inspect(@module_model)} not found"})
         end
       end
 

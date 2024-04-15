@@ -1,7 +1,6 @@
 defmodule EctoForge.Extension.Events.Logger.DefaultLogger do
   @moduledoc """
-
-
+  This module generate logger to yours models or contextes with cusom message
   ### use in define module
   ```elixir
   defmodule SomethingLogger do
@@ -10,17 +9,15 @@ defmodule EctoForge.Extension.Events.Logger.DefaultLogger do
   ```
   ### after connect to your Module
   ```elixir
-  use Support.EctoForgeInstanceTest,
+  use MyApp.EctoForgeInstanceTest,
     extensions_events_additional: [
-      define_log(SomethingLogger, message: "artemka")
+      SomethingLogger,
     ]
-
   ```
 
   ## paramets
-  - only_events: :all, :after -> this filter by events
+  - only_events: :all, :after or :before or :create .... -> this filter by events
   - is_result_log: result function to your logs
-  -
   - message: to emmebed to you logger
   """
   defmacro __using__(opts) do

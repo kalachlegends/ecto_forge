@@ -1,6 +1,6 @@
 defmodule EctoForge.Utls.ExecuteExtensionEvents do
   def exucute_before_created!(result, extensions) when is_list(extensions) do
-    Enum.reduce(extensions, result, fn ext, acc -> ext.on_created!(acc) end)
+    Enum.reduce(extensions, result, fn ext, acc -> ext.before_created!(acc) end)
   end
 
   def exucute_after_get(result, extensions) when is_list(extensions) do

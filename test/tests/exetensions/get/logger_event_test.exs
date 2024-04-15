@@ -32,5 +32,18 @@ defmodule Tests.Exetensions.Get.LoggerEventTest do
              "updated!"
 
     assert capture_log(fn -> PostModelWithLogger.delete!(post) end) =~ "deleted!"
+
+    assert capture_log(fn ->
+             PostModelWithLogger.create!(%{title: "artem", user_id: user.id, description: "asd"})
+           end) =~ "created!"
+
+    assert capture_log(fn ->
+             PostModelWithLogger.update_by_opts!(%{title: "artem"}, %{title: "33"})
+           end) =~ "updated!"
+
+    assert capture_log(fn ->
+             post = PostModelWithLogger.get!(%{title: "33"})
+             post = PostModelWithLogger.delete(post)
+           end) =~ "deleted"
   end
 end

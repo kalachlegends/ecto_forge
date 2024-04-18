@@ -92,7 +92,7 @@ by adding `ecto_forge` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ecto_forge, "~>  0.1.18"}
+    {:ecto_forge, "~>  0.1.19"}
   ]
 end
 ```

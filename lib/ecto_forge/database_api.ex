@@ -414,7 +414,7 @@ defmodule EctoForge.DatabaseApi do
 
       def get_all!(item_id_or_opts \\ nil) do
         case find_all(item_id_or_opts) do
-          [] -> throw(%Ecto.NoResultsError{message: "#{inspect(%@module_model{})} not found"})
+          [] -> raise %Ecto.NoResultsError{message: "#{inspect(%@module_model{})} not found"}
           items -> items
         end
       end

@@ -289,9 +289,9 @@ defmodule EctoForge.DatabaseApi do
       @ignore_fields opts[:ignore_fields] || []
       @not_found_message opts[:error_message] || :not_found
 
-      if length(@extensions_get) == 0 do
-        :logger.warning("extensions_get give [], expect [Some.Extesnisons]")
-      end
+      # if length(@extensions_get) == 0 do
+      #   :logger.warning("extensions_get give [], expect [Some.Extesnisons]")
+      # end
 
       use EctoForge.Helpers.QueryBinderGet,
         repo: @repo,

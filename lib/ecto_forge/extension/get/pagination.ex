@@ -51,6 +51,7 @@ defmodule EctoForge.Extension.Get.Pagination do
 
   defp get_normalized_integer(value, default_value) do
     cond do
+      value == "" -> default_value
       is_binary(value) -> value |> String.to_integer()
       is_integer(value) -> value
       true -> default_value

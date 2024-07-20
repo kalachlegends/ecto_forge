@@ -16,7 +16,8 @@ defmodule EctoForge.Extension.Default do
           | EctoForge.Extension.Get.Pagination
           | EctoForge.Extension.Get.Preload
           | EctoForge.Extension.Get.QueryFunction
-          | EctoForge.Extension.Get.Select,
+          | EctoForge.Extension.Get.Select
+          | EctoForge.Extension.Get.Lock,
           ...
         ]
   def all_list_extensions_get() do
@@ -31,7 +32,8 @@ defmodule EctoForge.Extension.Default do
       EctoForge.Extension.Get.OnlyQuery,
       EctoForge.Extension.Get.Select,
       EctoForge.Extension.Get.Pagination,
-      EctoForge.Extension.Get.QueryFunction
+      EctoForge.Extension.Get.QueryFunction,
+      EctoForge.Extension.Get.Lock
     ]
   end
 
@@ -48,7 +50,8 @@ defmodule EctoForge.Extension.Default do
           | EctoForge.Extension.Get.Pagination
           | EctoForge.Extension.Get.Preload
           | EctoForge.Extension.Get.QueryFunction
-          | EctoForge.Extension.Get.Select,
+          | EctoForge.Extension.Get.Select
+          | EctoForge.Extension.Get.Lock,
           ...
         ]
   def all_list_extensions_get_without_filter_error() do
@@ -62,7 +65,8 @@ defmodule EctoForge.Extension.Default do
       EctoForge.Extension.Get.OnlyQuery,
       EctoForge.Extension.Get.Select,
       EctoForge.Extension.Get.Pagination,
-      EctoForge.Extension.Get.QueryFunction
+      EctoForge.Extension.Get.QueryFunction,
+      EctoForge.Extension.Get.Lock
     ]
   end
 end

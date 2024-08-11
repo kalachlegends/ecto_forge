@@ -29,10 +29,6 @@ and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/ecto_forge>.
 
 ## Create an instance and plug in the necessary extensions from the existing ones or use ready-made ones
-
-## simplify create MyApp.EctoForgeInstanseBase if
-
-unless you pass extension_get  
 by default all extensions are used `EctoForge.Extension.Default.all_list_extensions_get()`
 
 ```elixir
@@ -63,7 +59,7 @@ defmodule MyApp.EctoForgeInstanseBase do
 end
 ```
 
-### After you can use
+### After you can use api `EctoForge.DatabaseApi`
 
 You will then be able to connect your instance to the model or reuse it in context
 
@@ -89,7 +85,7 @@ You will then be able to connect your instance to the model or reuse it in conte
 end
 ```
 
-After connection, the basic functions such as 'update', 'create', 'delete'  for the model will appear in the modules `MyApp.UserModel`
+After connection, the basic functions such as 'update', 'create', 'delete'  for the model will appear in the module `MyApp.UserModel`
 
 ### Or create your own context
 

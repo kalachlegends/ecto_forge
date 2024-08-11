@@ -3,7 +3,7 @@ defmodule EctoForge.Extension.Get.Lock do
   # You can use Api https://hexdocs.pm/ecto/Ecto.Query.html#lock/3
 
   ```
-  {:ok, []} = MyApp.Model.get_all(filter: %{id: 1}, lock: "FOR SHARE NOWAIT")
+  %{} = MyApp.Model.find(filter: %{id: 1}, lock: "FOR SHARE NOWAIT")
   ```
   """
   import Ecto.Query
@@ -54,7 +54,7 @@ defmodule EctoForge.Extension.Get.Lock do
             message: """
 
             This lock isn't support because of Ecto.Query accept or literally string ask developer of EctoForge to add your expression
-            this locks have supported:
+            this locks have support:
             #{inspect(supported_locks)}
             instead of this #{module}.find(filter: %{id: 1, lock: #{lock_attrs}}) you can use this:
             #{module}.find(filter: %{id: 1, query_function: fn your_query -> Ecto.Query.lock(your_query, "FOR SHARE") end})

@@ -1,5 +1,4 @@
 # EctoForge
-
 ## Motivation
 
 This module allows on-the-go editing of contexts, extensions, and providing basic work for the database with ecto. With this module you can add your own extensions for functions such as `find_all` `get_all` `get!` `find`

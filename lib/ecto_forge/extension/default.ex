@@ -54,6 +54,7 @@ defmodule EctoForge.Extension.Default do
           | EctoForge.Extension.Get.Lock,
           ...
         ]
+
   def all_list_extensions_get_without_filter_error() do
     [
       EctoForge.Extension.Get.Filter,

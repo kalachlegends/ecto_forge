@@ -16,11 +16,12 @@ defmodule EctoForge.CreateExtension.Events do
   end
 
   def after_created({:ok, item}) do
+
     {:ok, item |> Map.delete(:password)}
   end
-  end
+
   ```
-  ### Connect to your instansr or DataBaseApi
+  ### Connect to your instanse or DataBaseApi
 
   ```elixir
   use EctoForge.CreateInstance,

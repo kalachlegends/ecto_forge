@@ -31,10 +31,11 @@ defmodule EctoForge.Extension.Get.Pagination do
     {pagination_attrs, _} = Access.pop(attrs, :pagination)
 
     if is_list(pagination_attrs) or is_map(pagination_attrs) do
-      limit = get_normalized_integer(pagination_attrs[:limit], 10)
+      limit =
+        get_normalized_integer(pagination_attrs[:limit], 10)
+
       page = get_normalized_integer(pagination_attrs[:page], 1) - 1
       offeset = page * limit
-
       paginated_query = query |> limit(^limit) |> offset(^offeset)
 
       {:result,

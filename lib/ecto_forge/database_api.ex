@@ -4,7 +4,7 @@ defmodule EctoForge.DatabaseApi do
   @moduledoc """
   ## Implements base functions for database
 
-  ```elixir
+  ```
   use(
             EctoForge.DatabaseApi,
             [
@@ -67,7 +67,7 @@ defmodule EctoForge.DatabaseApi do
   do changeset with Repo.insert!()
   ### example
 
-  ```elixir
+  ```
   "@module_model".create(%{name: "artem"})
   ```
   """

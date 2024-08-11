@@ -2,10 +2,13 @@
 
 ## Motivation
 
-This module allows on-the-go editing of contexts, extensions, and providing basic work for the database with ecto. With this module you can add your own extensions for functions such as `find_all` `get_all` `get!` `find`
+This library allows on-the-go editing of contexts, extensions, and providing basic work for the database with ecto. 
+
+With this library you can add your own extensions for functions such as `find_all` `get_all` `get!` `find`
 
 In addition to generation and creation, this library implements standardised functions such as update!() create() delete(). 
 More about it here `EctoForge.DatabaseApi` or https://hexdocs.pm/ecto_forge/EctoForge.DatabaseApi.html
+
 ![image](https://github.com/user-attachments/assets/6e87e274-432e-4ff9-a42b-4ebdf4306ef8)
 
 ## Installation
@@ -74,9 +77,8 @@ You will then be able to connect your instance to the model or reuse it in conte
 
   schema "user" do
     field(:name, :string)
-    # timestamps()
   end
-
+  
   use MyApp.EctoForgeInstanseBase
   @doc false
   def changeset(emails_model \\ %__MODULE__{}, attrs) do
@@ -87,7 +89,7 @@ You will then be able to connect your instance to the model or reuse it in conte
 end
 ```
 
-After connection, the basic functions for the model will appear in the modules `MyApp.UserModel`
+After connection, the basic functions such as 'update', 'create', 'delete'  for the model will appear in the modules `MyApp.UserModel`
 
 ### Or create your own context
 
@@ -95,7 +97,7 @@ After connection, the basic functions for the model will appear in the modules `
 defmodule MyApp.Context.UserModel do
  use MyApp.EctoForgeInstanseBase, module_model: MyApp.UserModel
 end
-
+```
 
 ## What are extensions?
 

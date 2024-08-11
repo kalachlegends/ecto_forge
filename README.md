@@ -160,7 +160,6 @@ defmodule EctoForge.Extension.Get.Preload do
 end
 ```
 
-```
 ## List extensions by `EctoForge.Extension.Default.all_list_extensions_get()`
 
 - `EctoForge.Extension.Get.Preload`
@@ -171,4 +170,7 @@ end
 - `EctoForge.Extension.Get.Filter`
 - `EctoForge.Extension.Get.Lock`
 - `EctoForge.Extension.Get.OnlyQuery`
+
+```
+
 ```

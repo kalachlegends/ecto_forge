@@ -171,6 +171,3 @@ end
 - `EctoForge.Extension.Get.Lock`
 - `EctoForge.Extension.Get.OnlyQuery`
 
-```
-
-```

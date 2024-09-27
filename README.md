@@ -44,6 +44,7 @@ end
 ```elixir
 defmodule MyApp.EctoForgeInstanseBase do
   use EctoForge.CreateInstance,
+    extensions_events: [],
     extensions_get: [
         EctoForge.Extension.Get.Preload,
         EctoForge.Extension.Get.Filter,

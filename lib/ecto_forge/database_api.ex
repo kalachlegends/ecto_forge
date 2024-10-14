@@ -215,6 +215,7 @@ defmodule EctoForge.DatabaseApi do
 
   ```elixir
   {:ok, @module_model} = @module_model.update_by_opts(%{id: 1}, %{name: ""})
+  in attrs you can pass :update_changeset
   ```
   """
   @callback update_by_opts(
@@ -235,6 +236,7 @@ defmodule EctoForge.DatabaseApi do
   ```elixir
   @module_model = @module_model.update_by_opts!(%{id: 1}, %{name: ""})
   ```
+  in attrs you can pass :update_changeset 
   """
   @callback update_by_opts!(
               get_opts :: map() | keyword(),
@@ -465,7 +467,12 @@ defmodule EctoForge.DatabaseApi do
 
       def update_by_opts(get_opts, update_opts, attrs \\ []) do
         with {:ok, item} <- get(get_opts),
-             {:ok, item} <- update(item, update_opts, attrs) do
+             {:ok, item} <-
+               update_with_another_changeset(
+                 item,
+                 update_opts,
+                 attrs[:update_changeset] || :changeset
+               ) do
           {:ok, item}
         end
       end
@@ -473,7 +480,10 @@ defmodule EctoForge.DatabaseApi do
       def update_by_opts!(get_opts, update_opts, attrs \\ []) do
         res =
           get!(get_opts)
-          |> update!(update_opts, attrs)
+          |> update_with_another_changeset!(
+            update_opts,
+            attrs[:update_changeset] || :changeset
+          )
       end
 
       def delete(%@module_model{} = item) do
